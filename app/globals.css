@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* WCAG-focused contrast and keyboard visibility refinements. */
+:focus-visible{outline:3px solid #f0a33b;outline-offset:4px;border-radius:2px}.site-header a:focus-visible,.topbar a:focus-visible{outline-offset:3px}.specialty-visual{background:#357988!important}.info-accordion .MuiAccordionDetails-root{color:#3f5b64!important}.about-copy p{color:#425f69!important}.visit>div>div>p{color:#c9e4e9!important}.visit-details svg{color:#a9dce3!important}.visit-details span{color:#c4e2e7!important}.visit-actions p{color:#294e59!important}.visit-actions small,.footer-inner,.placeholder{color:#3f626c!important}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
 :root { --ink:#102f4d; --blue:#cfeaf1; --sky:#eaf7f9; --teal:#458f98; --warm:#f9f7f2; --line:#d4e4e6; }
 *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:#fff;color:var(--ink);font-family:Arial,Helvetica,sans-serif} a{color:inherit;text-decoration:none}.MuiContainer-root{max-width:1180px!important}
