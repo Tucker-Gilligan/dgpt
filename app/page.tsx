@@ -48,8 +48,8 @@ export default function Home() {
       <header className="site-header">
         <Container className="header-inner">
           <a className="brand" href="#top" aria-label="Dynamic Gains Physical Therapy home">
-            <span className="brand-mark">DG</span>
-            <span><strong>Dynamic Gains</strong><small>Physical Therapy</small></span>
+            <span className="brand-mark"><img src="/dgpt-logo.svg" alt="DGPT Physical Therapy" /></span>
+            <span className="brand-wordmark"><strong>Dynamic Gains</strong><small>Physical Therapy</small></span>
           </a>
           <nav aria-label="Main navigation">
             <a href="#services">Services</a><a href="#specialties">Specialties</a><a href="#about">About</a><a href="#visit">Visit us</a>
@@ -123,7 +123,7 @@ export default function Home() {
 
       <section className="visit" id="visit"><Container className="visit-grid"><div><span className="kicker">VISIT DYNAMIC GAINS</span><h2>Your next step<br />starts here.</h2><p>{content.visitIntro}</p><div className="visit-details"><p><LocationOnOutlinedIcon />{content.addressLine1}<br /><span>{content.addressLine2}</span></p><p><PhoneRoundedIcon /><a href={`tel:${phoneDigits}`}>{content.phone}</a><br /><span>{content.hours}</span></p></div></div><div className="visit-actions"><h3>{content.visitActionTitle}</h3><p>{content.visitActionText}</p><ActionButtons compact content={content} /><Button href={content.paymentUrl} variant="text" className="payment-link" startIcon={<PaymentsOutlinedIcon />}>Make a payment</Button><small>Secure Clover payment link coming soon.</small></div></Container></section>
 
-      <footer><Container className="footer-inner"><a className="brand footer-brand" href="#top"><span className="brand-mark">DG</span><span><strong>Dynamic Gains</strong><small>Physical Therapy</small></span></a><p>© {new Date().getFullYear()} Dynamic Gains Physical Therapy. All rights reserved.</p><p className="placeholder">{content.footerNote}</p></Container></footer>
+      <footer><Container className="footer-inner"><a className="brand footer-brand" href="#top"><span className="brand-mark"><img src="/dgpt-logo.svg" alt="DGPT Physical Therapy" /></span><span className="brand-wordmark"><strong>Dynamic Gains</strong><small>Physical Therapy</small></span></a><p>© {new Date().getFullYear()} Dynamic Gains Physical Therapy. All rights reserved.</p><p className="placeholder">{content.footerNote}</p></Container></footer>
       <div className="mobile-actions"><a href={`tel:${phoneDigits}`}><PhoneRoundedIcon /> Call</a><a href={content.bookingUrl}><CalendarMonthOutlinedIcon /> Book online</a></div>
     </main>
   );
