@@ -98,10 +98,19 @@ export default function Home() {
               <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}><strong>How can physical therapy help TMJ?</strong></AccordionSummary>
               <AccordionDetails>{content.tmjAnswer}</AccordionDetails>
             </Accordion>
+            <aside className="care-prep tmj-prep">
+              <span>TMJ VISIT GUIDE</span><h3>{content.tmjExpectTitle}</h3><p>{content.tmjExpectBody}</p>
+            </aside>
             <Accordion className="info-accordion" disableGutters>
               <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}><strong>What is the Schroth Method?</strong></AccordionSummary>
               <AccordionDetails>{content.schrothAnswer}</AccordionDetails>
             </Accordion>
+            <aside className="care-prep scoliosis-prep">
+              <span>SCOLIOSIS VISIT GUIDE</span><h3>Come prepared to learn.</h3>
+              <div><strong>What to bring</strong><p>{content.schrothBring}</p></div>
+              <div><strong>What to wear</strong><p>{content.schrothWear}</p></div>
+              <div><strong>What to expect</strong><p>{content.schrothExpect}</p></div>
+            </aside>
             <Accordion className="info-accordion" disableGutters>
               <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}><strong>What happens at my first visit?</strong></AccordionSummary>
               <AccordionDetails>{content.firstVisitAnswer}</AccordionDetails>
