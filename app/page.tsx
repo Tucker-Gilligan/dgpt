@@ -108,6 +108,7 @@ export default function Home() {
             <aside className="care-prep scoliosis-prep">
               <span>SCOLIOSIS VISIT GUIDE</span><h3>Come prepared to learn.</h3>
               <div><strong>What to bring</strong><p>{content.schrothBring}</p></div>
+              <div><strong>Imaging Details</strong><p>{content.schrothImagingDetails}</p></div>
               <div><strong>What to wear</strong><p>{content.schrothWear}</p></div>
               <div><strong>What to expect</strong><p>{content.schrothExpect}</p></div>
             </aside>

@@ -16,6 +16,7 @@ export type SiteContent = {
   tmjExpectBody: string;
   schrothAnswer: string;
   schrothBring: string;
+  schrothImagingDetails: string;
   schrothWear: string;
   schrothExpect: string;
   firstVisitAnswer: string;
@@ -51,6 +52,7 @@ export const defaultContent: SiteContent = {
   tmjExpectBody: "Your first visit includes a conversation about your symptoms, a gentle assessment of your jaw, neck, posture, and movement, and a personalized plan. Treatment may include education, hands-on techniques, mobility work, and practical exercises to support more comfortable daily function.",
   schrothAnswer: "The Schroth Method is a scoliosis-specific exercise approach that uses individualized posture, breathing, and strengthening strategies. Dalton holds PSSE–Schroth Level 1 certification and tailors care to each patient’s curve pattern and goals.",
   schrothBring: "Bring any relevant imaging reports, your referring provider’s notes if available, and a list of questions or goals you want to discuss.",
+  schrothImagingDetails: "If you have scoliosis X-rays or other relevant imaging, please bring the images and report with you. Full-spine standing X-rays are especially helpful when available.",
   schrothWear: "Wear comfortable, form-fitting athletic clothing that allows you to move easily. A fitted T-shirt and athletic shorts or leggings are ideal for observing posture and movement.",
   schrothExpect: "Expect an individualized assessment of posture, breathing, movement, and your curve pattern. You’ll learn personalized corrections and exercises, plus clear guidance for practicing them at home.",
   firstVisitAnswer: "We’ll start with a conversation about what matters to you, then complete a focused movement assessment. You’ll leave with clarity about your plan and practical next steps.",
