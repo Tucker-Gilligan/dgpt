@@ -51,9 +51,9 @@ export const defaultContent: SiteContent = {
   tmjExpectTitle: "What to expect for TMJ care",
   tmjExpectBody: "Your first visit includes a conversation about your symptoms, a gentle assessment of your jaw, neck, posture, and movement, and a personalized plan. Treatment may include education, hands-on techniques, mobility work, and practical exercises to support more comfortable daily function.",
   schrothAnswer: "The Schroth Method is a scoliosis-specific exercise approach that uses individualized posture, breathing, and strengthening strategies. Dalton holds PSSE–Schroth Level 1 certification and tailors care to each patient’s curve pattern and goals.",
-  schrothBring: "Bring any relevant imaging reports, your referring provider’s notes if available, and a list of questions or goals you want to discuss.",
-  schrothImagingDetails: "If you have scoliosis X-rays or other relevant imaging, please bring the images and report with you. Full-spine standing X-rays are especially helpful when available.",
-  schrothWear: "Wear comfortable, form-fitting athletic clothing that allows you to move easily. A fitted T-shirt and athletic shorts or leggings are ideal for observing posture and movement.",
+  schrothBring: "Please bring a scoliosis series X-ray and any braces you wear. If you wear a brace, remove it at least 6 hours before your first appointment.",
+  schrothImagingDetails: "For scoliosis X-rays, please provide a full-spine image in both PA and lateral views, or valid stitched imaging, including the femoral heads. EOS X-rays are recommended for children who need repeated imaging because they use significantly less radiation. Screenshots are acceptable; phone photos of X-rays are not.",
+  schrothWear: "Wear clothing that exposes your back for posture-grid photos. This helps us determine your curve type and fully assess your posture.",
   schrothExpect: "Expect an individualized assessment of posture, breathing, movement, and your curve pattern. You’ll learn personalized corrections and exercises, plus clear guidance for practicing them at home.",
   firstVisitAnswer: "We’ll start with a conversation about what matters to you, then complete a focused movement assessment. You’ll leave with clarity about your plan and practical next steps.",
   aboutLead: "Dalton Gilligan, DPT brings a whole-body perspective to every plan of care—helping people understand what’s happening, move with less fear, and build lasting confidence.",
@@ -70,5 +70,11 @@ export const defaultContent: SiteContent = {
 export function normalizeContent(input: unknown): SiteContent {
   if (!input || typeof input !== "object") return defaultContent;
   const candidate = input as Partial<SiteContent>;
-  return { ...defaultContent, ...candidate, services: Array.isArray(candidate.services) ? candidate.services : defaultContent.services };
+  const content = { ...defaultContent, ...candidate, services: Array.isArray(candidate.services) ? candidate.services : defaultContent.services };
+  // Migrate the original combined imaging guidance into its dedicated section.
+  if (content.schrothBring.startsWith("All patients must bring a scoliosis series x-ray")) {
+    content.schrothBring = defaultContent.schrothBring;
+    content.schrothImagingDetails = defaultContent.schrothImagingDetails;
+  }
+  return content;
 }
