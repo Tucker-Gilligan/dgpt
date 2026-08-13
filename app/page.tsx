@@ -34,17 +34,7 @@ function ActionButtons({ compact = false, content }: { compact?: boolean; conten
 
 export default function Home() {
   const [content, setContent] = useState<SiteContent>(defaultContent);
-  const [expandedGuide, setExpandedGuide] = useState<"tmj" | "schroth" | false>(false);
   useEffect(() => { fetch("/api/content").then(response => response.ok ? response.json() : null).then(value => value && setContent(value)).catch(() => undefined); }, []);
-  useEffect(() => {
-    const openGuideFromHash = () => {
-      if (window.location.hash === "#tmj-details") setExpandedGuide("tmj");
-      if (window.location.hash === "#schroth-details") setExpandedGuide("schroth");
-    };
-    openGuideFromHash();
-    window.addEventListener("hashchange", openGuideFromHash);
-    return () => window.removeEventListener("hashchange", openGuideFromHash);
-  }, []);
   const phoneDigits = content.phone.replace(/\D/g, "");
   return (
     <main>
@@ -96,7 +86,7 @@ export default function Home() {
           <div className="service-grid">
             {content.services.map(({ number, title, detail }) => {
               const detailTarget = title === "TMJ therapy" ? "#tmj-details" : title === "Schroth & scoliosis care" ? "#schroth-details" : null;
-              return <article className="service-card" key={number}><span>{number}</span><h3>{title}</h3><p>{detail}</p>{detailTarget && <a href={detailTarget} aria-label={`Learn about ${title}`} onClick={() => setExpandedGuide(title === "TMJ therapy" ? "tmj" : "schroth")}>Explore <ArrowOutwardRoundedIcon fontSize="small" /></a>}</article>;
+              return <article className="service-card" key={number}><span>{number}</span><h3>{title}</h3><p>{detail}</p>{detailTarget && <a href={detailTarget} aria-label={`Learn about ${title}`}>Explore <ArrowOutwardRoundedIcon fontSize="small" /></a>}</article>;
             })}
           </div>
         </Container>
@@ -107,14 +97,14 @@ export default function Home() {
           <div className="specialty-visual"><div className="s-curve" /><div className="specialty-label">Specialized<br />care</div></div>
           <div className="specialty-copy">
             <span className="kicker">A DEEPER LOOK</span><h2>Specialized care,<br /><em>clearly explained.</em></h2>
-            <Accordion className="info-accordion" disableGutters id="tmj-details" expanded={expandedGuide === "tmj"} onChange={(_, isExpanded) => setExpandedGuide(isExpanded ? "tmj" : false)}>
+            <Accordion className="info-accordion" disableGutters id="tmj-details">
               <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}><strong>How can physical therapy help TMJ?</strong></AccordionSummary>
               <AccordionDetails>{content.tmjAnswer}</AccordionDetails>
             </Accordion>
             <aside className="care-prep tmj-prep">
               <span>TMJ VISIT GUIDE</span><h3>{content.tmjExpectTitle}</h3><p>{content.tmjExpectBody}</p>
             </aside>
-            <Accordion className="info-accordion" disableGutters id="schroth-details" expanded={expandedGuide === "schroth"} onChange={(_, isExpanded) => setExpandedGuide(isExpanded ? "schroth" : false)}>
+            <Accordion className="info-accordion" disableGutters id="schroth-details">
               <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}><strong>What is the Schroth Method?</strong></AccordionSummary>
               <AccordionDetails>{content.schrothAnswer}</AccordionDetails>
             </Accordion>
