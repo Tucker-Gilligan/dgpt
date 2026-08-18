@@ -69,6 +69,11 @@ export function normalizeContent(input: unknown): SiteContent {
   if (!input || typeof input !== "object") return defaultContent;
   const candidate = input as Partial<SiteContent>;
   const content = { ...defaultContent, ...candidate, services: Array.isArray(candidate.services) ? candidate.services : defaultContent.services };
+  // Remove retired content and migrate the earlier insurance draft saved in D1.
+  delete (content as SiteContent & { footerNote?: string }).footerNote;
+  if (content.heroNote.trim().startsWith("Medicare and OON insurance will be accepted")) {
+    content.heroNote = defaultContent.heroNote;
+  }
   // Migrate the original combined imaging guidance into its dedicated section.
   if (content.schrothBring.startsWith("All patients must bring a scoliosis series x-ray")) {
     content.schrothBring = defaultContent.schrothBring;

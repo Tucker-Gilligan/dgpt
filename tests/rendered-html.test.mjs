@@ -36,6 +36,8 @@ test("server-renders the Dynamic Gains homepage", async () => {
   assert.match(html, /TMJ therapy/);
   assert.match(html, /Vestibular rehabilitation/);
   assert.match(html, /Schroth &amp; scoliosis care/);
+  assert.match(html, /In-network with Blue Cross Blue Shield/);
+  assert.doesNotMatch(html, /Medicare and OON insurance will be accepted/i);
 });
 
 test("does not publish the unfinished footer placeholder", async () => {
@@ -47,6 +49,6 @@ test("does not publish the unfinished footer placeholder", async () => {
     readFile(new URL("../lib/site-content.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/admin/page.tsx", import.meta.url), "utf8"),
   ]);
-  assert.doesNotMatch(contentSource, /footerNote|Logo, email, hours/);
+  assert.doesNotMatch(contentSource, /Logo, email, hours/);
   assert.doesNotMatch(adminSource, /footerNote|Footer note/);
 });
