@@ -12,7 +12,7 @@ const fields: Array<{ key: Exclude<keyof SiteContent, "services">; label: string
   { key: "schrothAnswer", label: "Schroth answer", multiline: true }, { key: "schrothBring", label: "Schroth — what to bring", multiline: true }, { key: "schrothImagingDetails", label: "Schroth — imaging details", multiline: true }, { key: "schrothWear", label: "Schroth — what to wear", multiline: true }, { key: "schrothExpect", label: "Schroth — what to expect", multiline: true }, { key: "firstVisitAnswer", label: "First visit answer", multiline: true },
   { key: "aboutLead", label: "About Dalton — lead", multiline: true }, { key: "aboutBody", label: "About Dalton — body", multiline: true },
   { key: "visitIntro", label: "Visit intro" }, { key: "addressLine1", label: "Address line 1" }, { key: "addressLine2", label: "Address line 2" }, { key: "hours", label: "Hours" },
-  { key: "visitActionTitle", label: "Visit callout title" }, { key: "visitActionText", label: "Visit callout text" }, { key: "footerNote", label: "Footer note" },
+  { key: "visitActionTitle", label: "Visit callout title" }, { key: "visitActionText", label: "Visit callout text" },
 ];
 
 export default function AdminPage() {

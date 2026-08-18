@@ -28,7 +28,6 @@ export type SiteContent = {
   hours: string;
   visitActionTitle: string;
   visitActionText: string;
-  footerNote: string;
 };
 
 export const defaultContent: SiteContent = {
@@ -64,7 +63,6 @@ export const defaultContent: SiteContent = {
   hours: "Hours: [coming soon]",
   visitActionTitle: "Ready when you are.",
   visitActionText: "Book online, give us a call, or make a secure payment.",
-  footerNote: "Logo, email, hours & patient links coming soon.",
 };
 
 export function normalizeContent(input: unknown): SiteContent {
