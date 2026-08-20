@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Dynamic Gains Physical Therapy | Denville, NJ",
-  description: "Thoughtful, one-on-one physical therapy for the way you live, work, train, and recover.",
+  description: "One-on-one physical therapy in Denville, NJ.",
   openGraph: {
     title: "Dynamic Gains Physical Therapy",
     description: "Move with confidence.",
