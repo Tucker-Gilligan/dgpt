@@ -1,57 +1,144 @@
 "use client";
 
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  Chip,
+  Container,
+  Stack,
+} from "@mui/material";
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
 import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import { useEffect, useState } from "react";
 import { defaultContent, SiteContent } from "../lib/site-content";
 
+function ActionButtons({ compact = false, content }: { compact?: boolean; content: SiteContent }) {
+  const phoneDigits = content.phone.replace(/\D/g, "");
+  return (
+    <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} className={compact ? "actions compact" : "actions"}>
+      <Button href={content.bookingUrl} variant="contained" className="button-primary" startIcon={<CalendarMonthOutlinedIcon />}>
+        Book online
+      </Button>
+      <Button href={`tel:${phoneDigits}`} variant="outlined" className="button-secondary" startIcon={<PhoneRoundedIcon />}>
+        Call {content.phone}
+      </Button>
+    </Stack>
+  );
+}
+
 export default function Home() {
   const [content, setContent] = useState<SiteContent>(defaultContent);
-  useEffect(() => {
-    fetch("/api/content").then((response) => (response.ok ? response.json() : null)).then((value) => value && setContent(value)).catch(() => undefined);
-  }, []);
-  const paymentUrl = /^https:\/\//i.test(content.paymentUrl.trim()) ? content.paymentUrl.trim() : null;
+  useEffect(() => { fetch("/api/content").then(response => response.ok ? response.json() : null).then(value => value && setContent(value)).catch(() => undefined); }, []);
   const phoneDigits = content.phone.replace(/\D/g, "");
-
-  return <main>
-    <header className="site-header"><div className="shell header-inner">
-      <a className="brand" href="#top" aria-label="Dynamic Gains Physical Therapy home"><img src="/dgpt-logo.svg" alt="Dynamic Gains Physical Therapy" /><span>Dynamic Gains<small>Physical Therapy</small></span></a>
-      <a className="quiet-link" href={`tel:${phoneDigits}`}>{content.phone}</a>
-    </div></header>
-
-    <section className="hero" id="top"><div className="shell hero-inner">
-      <p className="eyebrow">PHYSICAL THERAPY · DENVILLE, NJ</p>
-      <h1>Physical therapy</h1>
-      <p className="lede">{content.heroIntro}</p>
-      <div className="actions"><a className="button" href={content.bookingUrl}>Book an appointment <ArrowOutwardRoundedIcon /></a><a className="text-action" href={`tel:${phoneDigits}`}><PhoneRoundedIcon /> Call {content.phone}</a></div>
-      <p className="insurance-note">{content.heroNote}</p>
-    </div></section>
-
-    <section className="section" id="services"><div className="shell">
-      <p className="eyebrow">WHAT WE TREAT</p>
-      <div className="section-heading"><h2>Services</h2></div>
-      <div className="services">{content.services.map((service) => <article key={service.number}><span>{service.number}</span><h3>{service.title}</h3><p>{service.detail}</p></article>)}</div>
-    </div></section>
-
-    <section className="details section" id="details"><div className="shell">
-      <p className="eyebrow">CARE INFORMATION</p>
-      <div className="section-heading"><h2>What to expect</h2><p>Answers to common questions before your appointment.</p></div>
-      <div className="detail-list">
-        <details><summary>TMJ therapy</summary><div><p>{content.tmjAnswer}</p><h3>{content.tmjExpectTitle}</h3><p>{content.tmjExpectBody}</p></div></details>
-        <details><summary>Schroth &amp; scoliosis care</summary><div><p>{content.schrothAnswer}</p><h3>Preparing for your appointment</h3><p><strong>Bring:</strong> {content.schrothBring}</p><p><strong>Imaging:</strong> {content.schrothImagingDetails}</p><p><strong>Wear:</strong> {content.schrothWear}</p><p><strong>At your visit:</strong> {content.schrothExpect}</p></div></details>
-        <details><summary>Your first visit</summary><div><p>{content.firstVisitAnswer}</p></div></details>
+  const paymentUrl = /^https:\/\//i.test(content.paymentUrl.trim()) ? content.paymentUrl.trim() : null;
+  return (
+    <main>
+      <div className="topbar">
+        <Container className="topbar-inner">
+          <span>{content.topbar}</span>
+          <a href={`tel:${phoneDigits}`}>Call {content.phone}</a>
+        </Container>
       </div>
-    </div></section>
 
-    <section className="section payments" id="payments"><div className="shell">
-      <p className="eyebrow">BILLING &amp; INSURANCE</p>
-      <div className="section-heading"><h2>Payment details</h2><p className="payment-instructions">{content.paymentDetails}</p></div>
-      <div className="actions">{paymentUrl && <a className="button" href={paymentUrl}>Make a payment <ArrowOutwardRoundedIcon /></a>}<a className="text-action" href={`tel:${phoneDigits}`}><PhoneRoundedIcon /> Billing questions? Call {content.phone}</a></div>
-    </div></section>
+      <header className="site-header">
+        <Container className="header-inner">
+          <a className="brand" href="#top" aria-label="Dynamic Gains Physical Therapy home">
+            <span className="brand-mark"><img src="/dgpt-logo.svg" alt="DGPT Physical Therapy" /></span>
+            <span className="brand-wordmark"><strong>Dynamic Gains</strong><small>Physical Therapy</small></span>
+          </a>
+          <nav aria-label="Main navigation">
+            <a href="#services">Services</a><a href="#specialties">Specialties</a><a href="#about">About</a><a href="#visit">Visit us</a>
+          </nav>
+          <a className="header-book" href={content.bookingUrl}>Book now <ArrowOutwardRoundedIcon fontSize="small" /></a>
+        </Container>
+      </header>
 
-    <section className="about" id="about"><div className="shell about-inner"><p className="eyebrow">YOUR THERAPIST</p><div><h2>Dalton Gilligan, DPT</h2><p>{content.aboutLead}</p><p>{content.aboutBody}</p></div></div></section>
+      <section className="hero" id="top">
+        <Container className="hero-grid">
+          <div className="hero-copy">
+            <Chip label="PHYSICAL THERAPY • DENVILLE, NJ" className="eyebrow" />
+            <h1>{content.heroTitle}<br /><em>{content.heroEmphasis}</em></h1>
+            <p>{content.heroIntro}</p>
+            <ActionButtons content={content} />
+          </div>
+          <div className="hero-art" aria-label="Dynamic Gains Physical Therapy visual placeholder">
+            <div className="art-orbit orbit-one" /><div className="art-orbit orbit-two" /><div className="art-card">
+              <span>Individualized care</span><strong>Built around your goals.</strong>
+            </div>
+            <div className="art-dots">●<br />●<br />●</div>
+          </div>
+        </Container>
+      </section>
 
-    <section className="contact" id="contact"><div className="shell contact-inner"><div><p className="eyebrow">DYNAMIC GAINS PHYSICAL THERAPY</p><h2>Appointments</h2><p>{content.addressLine1}<br />{content.addressLine2}</p></div><div className="contact-actions"><a className="button light" href={content.bookingUrl}>Book an appointment <ArrowOutwardRoundedIcon /></a><a href={`tel:${phoneDigits}`}>{content.phone}</a></div></div></section>
-    <footer><div className="shell">© {new Date().getFullYear()} Dynamic Gains Physical Therapy</div></footer>
-  </main>;
+      <section className="trust-strip">
+        <Container><p>{content.trustStrip}</p><span>ORTHOPEDIC · TMJ · VESTIBULAR · SCOLIOSIS</span></Container>
+      </section>
+
+      <section className="section" id="services">
+        <Container>
+          <div className="section-intro"><span className="kicker">HOW WE CAN HELP</span><h2>Care that meets you<br />where you are.</h2><p>Whether pain is holding you back or you&apos;re ready to return to the things you love, your plan starts with listening.</p></div>
+          <div className="service-grid">
+            {content.services.map(({ number, title, detail }) => {
+              const detailTarget = title === "TMJ therapy" ? "#tmj-details" : title === "Schroth & scoliosis care" ? "#schroth-details" : null;
+              return <article className="service-card" key={number}><span>{number}</span><h3>{title}</h3><p>{detail}</p>{detailTarget && <a href={detailTarget} aria-label={`Learn about ${title}`}>Explore <ArrowOutwardRoundedIcon fontSize="small" /></a>}</article>;
+            })}
+          </div>
+        </Container>
+      </section>
+
+      <section className="specialties" id="specialties">
+        <Container className="specialties-grid">
+          <div className="specialty-visual"><div className="s-curve" /><div className="specialty-label">Specialized<br />care</div></div>
+          <div className="specialty-copy">
+            <span className="kicker">A DEEPER LOOK</span><h2>Specialized care,<br /><em>clearly explained.</em></h2>
+            <Accordion className="info-accordion" disableGutters id="tmj-details">
+              <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}><strong>How can physical therapy help TMJ?</strong></AccordionSummary>
+              <AccordionDetails>{content.tmjAnswer}</AccordionDetails>
+            </Accordion>
+            <aside className="care-prep tmj-prep">
+              <span>TMJ VISIT GUIDE</span><h3>{content.tmjExpectTitle}</h3><p>{content.tmjExpectBody}</p>
+            </aside>
+            <Accordion className="info-accordion" disableGutters id="schroth-details">
+              <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}><strong>What is the Schroth Method?</strong></AccordionSummary>
+              <AccordionDetails>{content.schrothAnswer}</AccordionDetails>
+            </Accordion>
+            <aside className="care-prep scoliosis-prep">
+              <span>SCOLIOSIS VISIT GUIDE</span><h3>Come prepared to learn.</h3>
+              <div><strong>What to bring</strong><p>{content.schrothBring}</p></div>
+              <div><strong>Imaging Details</strong><p>{content.schrothImagingDetails}</p></div>
+              <div><strong>What to wear</strong><p>{content.schrothWear}</p></div>
+              <div><strong>What to expect</strong><p>{content.schrothExpect}</p></div>
+            </aside>
+            <Accordion className="info-accordion" disableGutters>
+              <AccordionSummary expandIcon={<ExpandMoreRoundedIcon />}><strong>What happens at my first visit?</strong></AccordionSummary>
+              <AccordionDetails>{content.firstVisitAnswer}</AccordionDetails>
+            </Accordion>
+          </div>
+        </Container>
+      </section>
+
+      <section className="about section" id="about"><Container className="about-grid"><div><span className="kicker">MEET YOUR THERAPIST</span><h2>Expert guidance.<br /><em>Human care.</em></h2></div><div className="about-copy"><p className="lead">{content.aboutLead}</p><p>{content.aboutBody}</p><a href="#visit" className="text-link">Meet Dalton <ArrowOutwardRoundedIcon fontSize="small" /></a></div></Container></section>
+
+      <section className="visit" id="visit"><Container className="visit-grid"><div><span className="kicker">VISIT DYNAMIC GAINS</span><h2>Your next step<br />starts here.</h2><p>{content.visitIntro}</p><div className="visit-details"><p><LocationOnOutlinedIcon />{content.addressLine1}<br /><span>{content.addressLine2}</span></p><p><PhoneRoundedIcon /><a href={`tel:${phoneDigits}`}>{content.phone}</a><br /><span>{content.hours}</span></p></div></div><div className="visit-actions"><h3>{content.visitActionTitle}</h3><p>{content.visitActionText}</p><ActionButtons compact content={content} /><Button href={content.paymentUrl} variant="text" className="payment-link" startIcon={<PaymentsOutlinedIcon />}>Make a payment</Button><small>Secure Clover payment link coming soon.</small></div></Container></section>
+
+      <section className="section payment-details" id="payments"><Container className="about-grid">
+        <div><span className="kicker">BILLING &amp; PAYMENTS</span><h2>Payment details</h2></div>
+        <div className="about-copy"><p className="payment-instructions">{content.paymentDetails}</p><Stack direction={{ xs: "column", sm: "row" }} spacing={2} className="actions">
+          {paymentUrl && <Button href={paymentUrl} variant="contained" className="button-primary" startIcon={<PaymentsOutlinedIcon />}>Make a payment</Button>}
+          <Button href={`tel:${phoneDigits}`} variant="outlined" className="button-secondary" startIcon={<PhoneRoundedIcon />}>Billing questions? Call {content.phone}</Button>
+        </Stack></div>
+      </Container></section>
+
+      <section className="insurance" id="insurance"><Container className="insurance-inner"><h2>Insurance</h2><p>{content.heroNote}</p></Container></section>
+
+      <footer><Container className="footer-inner"><a className="brand footer-brand" href="#top"><span className="brand-mark"><img src="/dgpt-logo.svg" alt="DGPT Physical Therapy" /></span><span className="brand-wordmark"><strong>Dynamic Gains</strong><small>Physical Therapy</small></span></a><p>© {new Date().getFullYear()} Dynamic Gains Physical Therapy. All rights reserved.</p></Container></footer>
+      <div className="mobile-actions"><a href={`tel:${phoneDigits}`}><PhoneRoundedIcon /> Call</a><a href={content.bookingUrl}><CalendarMonthOutlinedIcon /> Book online</a></div>
+    </main>
+  );
 }
