@@ -1,0 +1,10 @@
+{
+  "production": {
+    "projectId": "appgprj_6a7c6998bdb88191b4775620087f2169",
+    "url": "https://dynamic-gains-pt.gillitux.chatgpt.site"
+  },
+  "qa": {
+    "projectId": "appgprj_6ada593ff1288191bcd3ccc5dee46c78",
+    "url": "https://dynamic-gains-pt-qa.gillitux.chatgpt.site"
+  }
+}
