@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { defaultContent, SiteContent } from "../../lib/site-content";
 
 const fields: Array<{ key: Exclude<keyof SiteContent, "services">; label: string; multiline?: boolean }> = [
+  { key: "paymentDetails", label: "Payment details — public instructions", multiline: true },
   { key: "bookingUrl", label: "SPRY booking link" }, { key: "paymentUrl", label: "Clover payment link" }, { key: "phone", label: "Phone" },
   { key: "topbar", label: "Top bar message" }, { key: "heroTitle", label: "Hero headline" }, { key: "heroEmphasis", label: "Hero emphasis" },
   { key: "heroIntro", label: "Hero introduction", multiline: true }, { key: "heroNote", label: "Insurance note" }, { key: "trustStrip", label: "Trust-strip message", multiline: true },

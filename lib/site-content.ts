@@ -4,6 +4,7 @@ export type SiteContent = {
   phone: string;
   bookingUrl: string;
   paymentUrl: string;
+  paymentDetails: string;
   topbar: string;
   heroTitle: string;
   heroEmphasis: string;
@@ -34,6 +35,7 @@ export const defaultContent: SiteContent = {
   phone: "973-396-7694",
   bookingUrl: "#booking-placeholder",
   paymentUrl: "#payment-placeholder",
+  paymentDetails: "For questions about your bill, payment options, or insurance coverage, please call our office.",
   topbar: "Now accepting new patients in Denville",
   heroTitle: "Move better.",
   heroEmphasis: "Feel like yourself.",
