@@ -35,6 +35,10 @@ function ActionButtons({ compact = false, content }: { compact?: boolean; conten
 export default function Home() {
   const [content, setContent] = useState<SiteContent>(defaultContent);
   useEffect(() => { fetch("/api/content").then(response => response.ok ? response.json() : null).then(value => value && setContent(normalizeContent(value))).catch(() => undefined); }, []);
+  return <SitePage content={content} />;
+}
+
+export function SitePage({ content }: { content: SiteContent }) {
   const phoneDigits = content.phone.replace(/\D/g, "");
   const paymentUrl = /^https:\/\//i.test(content.paymentUrl.trim()) ? content.paymentUrl.trim() : null;
   return (
@@ -83,7 +87,7 @@ services: (<section className="section" id="services">
           <div className="section-intro"><span className="kicker">HOW WE CAN HELP</span><h2>Care that meets you<br />where you are.</h2><p>Whether pain is holding you back or you&apos;re ready to return to the things you love, your plan starts with listening.</p></div>
           <div className="service-grid">
             {content.services.map(({ number, title, detail }) => {
-              const detailTarget = title === "TMJ therapy" ? "#tmj-details" : title === "Schroth & scoliosis care" ? "#schroth-details" : null;
+              const detailTarget = number === "02" ? "#tmj-details" : number === "04" ? "#schroth-details" : null;
               return <article className="service-card" key={number}><span>{number}</span><h3>{title}</h3><p>{detail}</p>{detailTarget && <a href={detailTarget} aria-label={`Learn about ${title}`}>Explore <ArrowOutwardRoundedIcon fontSize="small" /></a>}</article>;
             })}
           </div>

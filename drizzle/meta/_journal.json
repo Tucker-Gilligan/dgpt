@@ -8,6 +8,13 @@
       "when": 1786625352269,
       "tag": "0000_shallow_nebula",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1792696598104,
+      "tag": "0001_broken_the_stranger",
+      "breakpoints": true
     }
   ]
 }
