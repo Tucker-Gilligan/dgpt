@@ -1,6 +1,27 @@
+export const orderOptions = {
+  sections: { hero: "Introduction", trust: "Care message", services: "Services", specialties: "Specialized care", about: "About Dalton", visit: "Visit us", payments: "Payment details", insurance: "Insurance" },
+  specialties: { tmj: "TMJ question", tmjPrep: "TMJ visit guide", schroth: "Schroth question", schrothPrep: "Scoliosis visit guide", firstVisit: "First visit question" },
+  schrothGuide: { bring: "What to bring", imaging: "Imaging details", wear: "What to wear", expect: "What to expect" },
+} as const;
+export type OrderGroup = keyof typeof orderOptions;
+export type LayoutOrder = { [K in OrderGroup]: Array<keyof typeof orderOptions[K]> };
+export const defaultOrder: LayoutOrder = {
+  sections: ["hero", "trust", "services", "specialties", "about", "visit", "payments", "insurance"],
+  specialties: ["tmj", "tmjPrep", "schroth", "schrothPrep", "firstVisit"],
+  schrothGuide: ["bring", "imaging", "wear", "expect"],
+};
+export function normalizeOrder(input: unknown): LayoutOrder {
+  const candidate = input && typeof input === "object" ? input as Record<string, unknown> : {};
+  return Object.fromEntries(Object.entries(defaultOrder).map(([key, defaults]) => {
+    const values = Array.isArray(candidate[key]) ? candidate[key] as unknown[] : [];
+    return [key, [...new Set([...values.filter(value => typeof value === "string" && (defaults as string[]).includes(value)), ...defaults])]];
+  })) as LayoutOrder;
+}
+
 export type Service = { number: string; title: string; detail: string };
 
 export type SiteContent = {
+  layoutOrder: LayoutOrder;
   phone: string;
   bookingUrl: string;
   paymentUrl: string;
@@ -32,6 +53,7 @@ export type SiteContent = {
 };
 
 export const defaultContent: SiteContent = {
+  layoutOrder: defaultOrder,
   phone: "973-396-7694",
   bookingUrl: "#booking-placeholder",
   paymentUrl: "#payment-placeholder",
@@ -71,15 +93,6 @@ export function normalizeContent(input: unknown): SiteContent {
   if (!input || typeof input !== "object") return defaultContent;
   const candidate = input as Partial<SiteContent>;
   const content = { ...defaultContent, ...candidate, services: Array.isArray(candidate.services) ? candidate.services : defaultContent.services };
-  // Remove retired content and migrate the earlier insurance draft saved in D1.
-  delete (content as SiteContent & { footerNote?: string }).footerNote;
-  if (content.heroNote.trim().startsWith("Medicare and OON insurance will be accepted")) {
-    content.heroNote = defaultContent.heroNote;
-  }
-  // Migrate the original combined imaging guidance into its dedicated section.
-  if (content.schrothBring.startsWith("All patients must bring a scoliosis series x-ray")) {
-    content.schrothBring = defaultContent.schrothBring;
-    content.schrothImagingDetails = defaultContent.schrothImagingDetails;
-  }
+  content.layoutOrder = normalizeOrder(candidate.layoutOrder);
   return content;
 }

@@ -1,6 +1,6 @@
 # Release workflow
 
-Production is the existing public DGPT site. QA is a separate private Sites project, with its own database. A Git branch alone is not an environment.
+Production is the existing public DGPT site. QA is a separate Sites project (currently accessible to anyone with its link for Dalton’s review), with its own database. A Git branch alone is not an environment.
 
 1. Start a feature branch from current main (`codex/<feature>`).
 2. Implement and test locally. Keep the production hosting manifest in the source repository.
@@ -12,4 +12,8 @@ Production is the existing public DGPT site. QA is a separate private Sites proj
 
 The release check verifies branch, clean working tree, origin/main alignment, and project identity. Direct hosting tool calls can bypass it; it is not a server-side restriction. GitHub branch protection and automated deployment credentials would be additional infrastructure controls.
 
-Admin content is separate from code. The existing editor still needs concurrent-edit protection, successful-load gating, and versioned content backups. Environment separation does not fix those limitations.
+Admin content is separate from code. The editor saves changed fields only, rejects stale revisions atomically, and blocks saves after load failures. Database triggers retain old and new content for every protected save. Saved versions load as drafts; restoring requires a normal revision-checked publish. Legacy full-document PUT saves are rejected.
+
+Before production: `npm run content:snapshot -- production outputs/pre-release.json`. After production: `npm run content:verify -- production outputs/pre-release.json`. Any difference requires investigation, never an automatic database overwrite. Rendering regression tests inject custom text into every editor field and reorder the page to verify saved values remain visible.
+
+History begins on the first protected content save, preserving the preceding stored version too. Code deployment itself does not write content. Never deploy code that restores the legacy PUT endpoint; older code could bypass revision checks.

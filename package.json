@@ -9,10 +9,12 @@
     "dev": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext dev",
     "build": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext build",
     "start": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext start",
-    "test": "npm run build && node --test tests/*.test.mjs",
+    "test": "npm run build && node --test tests/*.test.mjs tests/*.test.cjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate",
-    "release:check": "node scripts/check-release.mjs"
+    "release:check": "node scripts/check-release.mjs",
+    "content:snapshot": "node scripts/content-snapshot.mjs save",
+    "content:verify": "node scripts/content-snapshot.mjs verify"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
